@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Princess Charlotte C. Grutas | Interactive Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Importing cursive decorative font while enforcing SF UI Text system font family for primary typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Sacramento&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        pastelPink: '#FFE5EC',
+                        softBlush: '#FFC2D1',
+                        bubblegumPink: '#FF8FAB',
+                        vibrantPink: '#FB6F92',
+                        skyBlue: '#E0F4FF',
+                        babyBlue: '#B9E5E8',
+                        softSky: '#7FA1C3',
+                        deepBlueAccent: '#4A729A',
+                    },
+                    fontFamily: {
+                        sans: ['"SF UI Text"', '-apple-system', 'BlinkMacSystemFont', '"SF Pro Text"', 'system-ui', '"Segoe UI"', 'Roboto', 'Helvetica', 'Arial', 'sans-serif'],
+                        cursive: ['"Sacramento"', 'cursive'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body, button, input, select, textarea, h1, h2, h3, h4, h5, h6, p, span, a, li, blockquote {
+            font-family: "SF UI Text", -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .font-cursive-override {
+            font-family: 'Sacramento', cursive !important;
+        }
+
+        /* Custom scrollbar in pink and blue palette */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #FFE5EC;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #B9E5E8;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #FF8FAB;
+        }
+
+        /* Floating background elements */
+        .floating-element {
+            position: absolute;
+            pointer-events: none;
+            opacity: 0.6;
+            animation: float 12s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-25px) rotate(15deg); }
+        }
+
+        /* Gradients */
+        .hero-gradient {
+            background: linear-gradient(135deg, #FFE5EC 0%, #E0F4FF 50%, #FFC2D1 100%);
+        }
+        
+        .card-gradient-pink {
+            background: linear-gradient(145deg, #FFFFFF, #FFE5EC);
+        }
+
+        .card-gradient-blue {
+            background: linear-gradient(145deg, #FFFFFF, #E0F4FF);
+        }
+
+        /* Heart Trail Particles */
+        .cursor-particle {
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            font-size: 14px;
+            animation: fadeOutUp 1s ease-out forwards;
+        }
+
+        @keyframes fadeOutUp {
+            0% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+            100% { opacity: 0; transform: translate(-50%, -80px) scale(1.5); }
+        }
+
+        /* Heart Burst Particles */
+        .heart-burst {
+            position: absolute;
+            pointer-events: none;
+            font-size: 20px;
+            animation: burst 0.8s ease-out forwards;
+        }
+
+        @keyframes burst {
+            0% { opacity: 1; transform: translate(0, 0) scale(0.5); }
+            100% { opacity: 0; transform: translate(var(--tw-x), var(--tw-y)) scale(1.4); }
+        }
+
+        /* Visualizer Equalizer Bar Animation */
+        .eq-bar {
+            animation: eqPulse 1.2s infinite ease-in-out alternate;
+        }
+        .eq-bar:nth-child(2) { animation-delay: 0.2s; }
+        .eq-bar:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes eqPulse {
+            0% { height: 4px; }
+            100% { height: 16px; }
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-700 font-sans relative overflow-x-hidden selection:bg-softBlush selection:text-vibrantPink">
+
+    <!-- Background Particles Layer -->
+    <div id="floating-container" class="fixed inset-0 overflow-hidden z-0 pointer-events-none"></div>
+
+    <!-- Navigation Bar -->
+    <nav class="sticky top-0 z-40 backdrop-blur-md bg-white/80 border-b border-softBlush/40 shadow-sm transition-all duration-300">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center space-x-2">
+                    <span class="font-cursive-override text-3xl font-bold text-vibrantPink">Princess Charlotte</span>
+                </div>
+                <!-- Desktop Nav -->
+                <div class="hidden md:flex items-center space-x-6 text-sm font-medium">
+                    <a href="#about" class="text-slate-600 hover:text-vibrantPink transition-colors">About Me</a>
+                    <a href="#reflection" class="text-slate-600 hover:text-vibrantPink transition-colors">Reflections</a>
+                    <a href="#favorites" class="text-slate-600 hover:text-vibrantPink transition-colors">Favorites</a>
+                    <a href="#hobbies" class="text-slate-600 hover:text-vibrantPink transition-colors">Hobbies</a>
+                    <a href="#fandom" class="text-slate-600 hover:text-vibrantPink transition-colors">Idols</a>
+                </div>
+                <!-- Interactive Action Buttons -->
+                <div class="flex items-center gap-3">
+                    <button onclick="triggerConfettiBurst(event)" class="px-3 py-1.5 rounded-full bg-pastelPink text-vibrantPink hover:bg-softBlush text-xs font-bold transition flex items-center gap-1.5 shadow-sm active:scale-95">
+                        <span>💖</span> <span id="nav-heart-count">0</span>
+                    </button>
+                    <!-- Mobile menu button -->
+                    <button id="mobile-menu-btn" class="md:hidden text-vibrantPink focus:outline-none p-2" aria-label="Toggle Navigation">
+                        <i class="fa-solid fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Dropdown -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white/95 border-b border-softBlush px-4 pt-2 pb-4 space-y-2 text-center shadow-lg">
+            <a href="#about" class="block py-2 text-slate-600 hover:text-vibrantPink hover:bg-pastelPink/50 rounded-lg">About Me</a>
+            <a href="#reflection" class="block py-2 text-slate-600 hover:text-vibrantPink hover:bg-pastelPink/50 rounded-lg">Reflections</a>
+            <a href="#favorites" class="block py-2 text-slate-600 hover:text-vibrantPink hover:bg-pastelPink/50 rounded-lg">Favorites</a>
+            <a href="#hobbies" class="block py-2 text-slate-600 hover:text-vibrantPink hover:bg-pastelPink/50 rounded-lg">Hobbies</a>
+            <a href="#fandom" class="block py-2 text-slate-600 hover:text-vibrantPink hover:bg-pastelPink/50 rounded-lg">Idols</a>
+        </div>
+    </nav>
+
+    <!-- Floating Audio Vibe Visualizer Player Widget -->
+    <div class="fixed bottom-5 right-5 z-40 bg-white/90 backdrop-blur-md p-3 rounded-2xl border-2 border-softBlush shadow-xl flex items-center gap-3 transition-all hover:scale-105">
+        <button id="audio-toggle-btn" onclick="toggleAudio()" class="w-10 h-10 rounded-full bg-vibrantPink text-white flex items-center justify-center shadow-md active:scale-90 transition">
+            <i id="audio-icon" class="fa-solid fa-play"></i>
+        </button>
+        <div class="hidden sm:block text-xs">
+            <div class="font-bold text-slate-800">Relaxing Aesthetic Vibe</div>
+            <div class="text-[10px] text-vibrantPink font-medium flex items-center gap-1">
+                <span id="audio-status">Click to play ambient melody</span>
+            </div>
+        </div>
+        <!-- Visualizer Equalizer Bars -->
+        <div id="visualizer-bars" class="hidden flex items-end gap-1 h-5 px-1">
+            <div class="w-1 bg-vibrantPink rounded-full eq-bar h-2"></div>
+            <div class="w-1 bg-softSky rounded-full eq-bar h-4"></div>
+            <div class="w-1 bg-bubblegumPink rounded-full eq-bar h-3"></div>
+        </div>
+        <audio id="bg-audio" loop preload="none">
+            <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3" type="audio/mpeg">
+        </audio>
+    </div>
+
+    <!-- Hero Section -->
+    <header class="relative hero-gradient py-16 md:py-24 px-4 overflow-hidden z-10 border-b border-softBlush/50">
+        <div class="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-10">
+            <!-- Hero Text -->
+            <div class="text-center md:text-left space-y-4 max-w-lg">
+                <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/80 border border-softBlush text-vibrantPink text-xs font-semibold tracking-wide shadow-sm">
+                    <i class="fa-solid fa-sparkles"></i> Interactive Personal Website
+                </div>
+                <h1 class="text-3xl sm:text-5xl font-extrabold text-slate-800 leading-tight">
+                    Hi, I'm <span class="text-transparent bg-clip-text bg-gradient-to-r from-vibrantPink to-deepBlueAccent">Princess Charlotte</span>
+                </h1>
+                <p class="text-base sm:text-lg text-slate-600 font-normal">
+                    2nd Year BS Computer Science Student • Creative Storywriter • K-Pop Fanatic
+                </p>
+                <div class="pt-2 flex flex-wrap gap-3 justify-center md:justify-start">
+                    <a href="#about" class="px-6 py-2.5 rounded-full bg-vibrantPink text-white font-medium text-sm shadow-md hover:bg-bubblegumPink transition-all duration-300 hover:scale-105">
+                        Discover More
+                    </a>
+                    <a href="#reflection" class="px-6 py-2.5 rounded-full bg-white text-deepBlueAccent border border-babyBlue font-medium text-sm shadow-sm hover:bg-skyBlue/50 transition-all duration-300">
+                        Read My Reflections
+                    </a>
+                </div>
+            </div>
+
+            <!-- Profile Photo Card with Interactive Upload Preview -->
+            <div class="relative group">
+                <div class="absolute -inset-1.5 bg-gradient-to-r from-bubblegumPink to-babyBlue rounded-3xl blur opacity-75 group-hover:opacity-100 transition duration-500"></div>
+                <div class="relative w-64 h-72 sm:w-72 sm:h-80 bg-white rounded-3xl overflow-hidden shadow-xl border-4 border-white flex flex-col items-center justify-center p-4 text-center">
+                    <img id="main-profile-img" 
+                         src="https://placehold.co/400x500/FFE5EC/4A729A?text=Add+Profile+Photo+Here" 
+                         alt="Princess Charlotte C. Grutas Profile Picture Placeholder" 
+                         class="w-full h-full object-cover rounded-2xl cursor-pointer hover:opacity-90 transition"
+                         onclick="openDetailModal('Profile Photo', 'Princess Charlotte C. Grutas', 'https://placehold.co/400x500/FFE5EC/4A729A?text=Add+Profile+Photo+Here', '2nd Year BS Computer Science Student residing in Barangay Looc, Calamba City, Laguna. Click the upload button below to simulate your photo!')"
+                         onerror="this.onerror=null; this.src='https://placehold.co/400x500/FFE5EC/4A729A?text=Princess+Charlotte';" />
+                    
+                    <div class="absolute bottom-3 inset-x-3 bg-white/90 backdrop-blur-sm p-2 rounded-xl border border-softBlush text-[11px] font-medium text-slate-600 shadow-sm flex items-center justify-between">
+                        <span>📷 Image Placeholder</span>
+                        <label class="cursor-pointer bg-vibrantPink text-white px-2 py-1 rounded-lg text-[10px] font-bold hover:bg-bubblegumPink transition">
+                            Test Photo
+                            <input type="file" accept="image/*" class="hidden" onchange="previewImage(event, 'main-profile-img')">
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- About Me Section -->
+    <section id="about" class="py-16 px-4 max-w-5xl mx-auto z-10 relative">
+        <div class="text-center mb-12">
+            <h2 class="text-2xl sm:text-3xl font-bold text-slate-800">About Me</h2>
+            <div class="w-16 h-1 bg-gradient-to-r from-vibrantPink to-babyBlue mx-auto mt-2 rounded-full"></div>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-8">
+            <!-- Personal Information Card -->
+            <div class="bg-white p-6 rounded-2xl shadow-md border border-softBlush/60 card-gradient-pink relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-24 h-24 bg-pastelPink/40 rounded-bl-full pointer-events-none"></div>
+                <h3 class="text-xl font-bold text-vibrantPink mb-4 flex items-center gap-2">
+                    <i class="fa-solid fa-user-heart"></i> Profile Highlights
+                </h3>
+                <ul class="space-y-3 text-sm sm:text-base">
+                    <li class="flex items-start gap-2">
+                        <span class="font-semibold text-slate-700 min-w-[100px]">Full Name:</span>
+                        <span class="text-slate-600">Princess Charlotte C. Grutas</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <span class="font-semibold text-slate-700 min-w-[100px]">Age:</span>
+                        <span class="text-slate-600">21 years old</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <span class="font-semibold text-slate-700 min-w-[100px]">Location:</span>
+                        <span class="text-slate-600">Barangay Looc, Calamba City, Laguna</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <span class="font-semibold text-slate-700 min-w-[100px]">Education:</span>
+                        <span class="text-slate-600">2nd Year, Bachelor of Science in Computer Science</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Social Energy & Homebody Reflection Card -->
+            <div class="bg-white p-6 rounded-2xl shadow-md border border-babyBlue/60 card-gradient-blue relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-24 h-24 bg-skyBlue/40 rounded-bl-full pointer-events-none"></div>
+                <h3 class="text-xl font-bold text-deepBlueAccent mb-4 flex items-center gap-2">
+                    <i class="fa-solid fa-house-chimney-heart"></i> Social Energy & Vibe
+                </h3>
+                <div class="space-y-3 text-sm sm:text-base text-slate-600 leading-relaxed">
+                    <p class="italic bg-white/80 p-3 rounded-xl border border-skyBlue/50 shadow-sm">
+                        "I prefer to be alone rather than with a group. I'm a homebody person. It drains me every time I'm with three or more people. One is good, two is okay I can survive. But with three or more, there's just too much to take in."
+                    </p>
+                    <div class="mt-3 p-3 bg-pastelPink/30 rounded-xl border border-softBlush/40 text-xs">
+                        <span class="font-bold text-vibrantPink block mb-1">❌ Dislikes:</span>
+                        <span class="text-slate-600">Noisy people, crowded places, green veggies, cockroaches, frogs, and extremely cold places.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Personal Reflections Section -->
+    <section id="reflection" class="py-16 px-4 bg-skyBlue/30 border-y border-softBlush/30 z-10 relative">
+        <div class="max-w-5xl mx-auto">
+            <div class="text-center mb-12">
+                <h2 class="text-2xl sm:text-3xl font-bold text-slate-800">Personal Reflections</h2>
+                <p class="text-slate-500 text-sm mt-1">Thoughtful insights into my inner world</p>
+                <div class="w-16 h-1 bg-gradient-to-r from-vibrantPink to-babyBlue mx-auto mt-2 rounded-full"></div>
+            </div>
+
+            <div class="grid gap-6 md:grid-cols-3">
+                <!-- Writing Reflection Card -->
+                <div onclick="openDetailModal('Writing Storyteller', 'Expressing Myself Through Stories', '', 'I really really love writing because in writing people don\'t get to see who you really are behind those works—you can be whoever you want. I can express myself more on writing. I put myself in their shoes and realize a lot more things in the world.')" class="bg-white p-6 rounded-2xl shadow-sm border border-softBlush flex flex-col justify-between hover:shadow-md hover:-translate-y-1 transition duration-300 cursor-pointer">
+                    <div>
+                        <div class="w-10 h-10 rounded-full bg-pastelPink flex items-center justify-center text-vibrantPink mb-4">
+                            <i class="fa-solid fa-feather-pointed"></i>
+                        </div>
+                        <h3 class="font-bold text-lg text-slate-800 mb-2">On Writing Stories</h3>
+                        <blockquote class="text-xs sm:text-sm text-slate-600 italic border-l-2 border-vibrantPink pl-3 py-1 mb-3">
+                            "In writing people don't get to see who you really are behind those works, you can be whoever you want. I can express myself more on writing."
+                        </blockquote>
+                    </div>
+                    <span class="text-xs text-vibrantPink font-bold flex items-center gap-1 mt-2">
+                        Click to read full insight <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                    </span>
+                </div>
+
+                <!-- Color Story Reflection Card -->
+                <div onclick="openDetailModal('Color Philosophy', 'Why I Love My Colors', '', 'I love Pink, Light Blue, Burgundy, Cherry Red, and Light Purple because when I see them, my first instinct was to smile. It can be anything, as long as it\'s one of these colors. Those colors give me happiness when I see them everywhere.')" class="bg-white p-6 rounded-2xl shadow-sm border border-babyBlue flex flex-col justify-between hover:shadow-md hover:-translate-y-1 transition duration-300 cursor-pointer">
+                    <div>
+                        <div class="w-10 h-10 rounded-full bg-skyBlue flex items-center justify-center text-deepBlueAccent mb-4">
+                            <i class="fa-solid fa-palette"></i>
+                        </div>
+                        <h3 class="font-bold text-lg text-slate-800 mb-2">My Favorite Palette</h3>
+                        <p class="text-xs sm:text-sm text-slate-600 mb-3">
+                            Pink, Light Blue, Burgundy, Cherry Red, and Light Purple. When I see them, my first instinct is to smile!
+                        </p>
+                    </div>
+                    <span class="text-xs text-deepBlueAccent font-bold flex items-center gap-1 mt-2">
+                        Click to read color meaning <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                    </span>
+                </div>
+                                <!-- Food & Drink Reflection Card -->
+                <div onclick="openDetailModal('Comfort Food', 'Food & Drink Comforts', '', 'No explanation needed—I just love eating Eggpie, Chicken Poppers, Eggplant, Tomatoes, Fries, Carbonara, Cheese, Coke with Float, Chocolate Drinks, Milk, Strawberry drinks, and COLD water! If the world ends and I only have these foods, I think I can survive lol!')" class="bg-white p-6 rounded-2xl shadow-sm border border-softBlush flex flex-col justify-between hover:shadow-md hover:-translate-y-1 transition duration-300 cursor-pointer">
+                    <div>
+                        <div class="w-10 h-10 rounded-full bg-pastelPink flex items-center justify-center text-vibrantPink mb-4">
+                            <i class="fa-solid fa-mug-hot"></i>
+                        </div>
+                        <h3 class="font-bold text-lg text-slate-800 mb-2">Food & Cold Drinks</h3>
+                        <p class="text-xs sm:text-sm text-slate-600 mb-3">
+                            Comfort delicacies that keep me happy and surviving even in an apocalypse lol!
+                        </p>
+                    </div>
+                    <span class="text-xs text-vibrantPink font-bold flex items-center gap-1 mt-2">
+                        Click to read food story <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Favorite Things Section -->
+    <section id="favorites" class="py-16 px-4 max-w-5xl mx-auto z-10 relative">
+        <div class="text-center mb-8">
+            <h2 class="text-2xl sm:text-3xl font-bold text-slate-800">Favorite Things</h2>
+            <p class="text-slate-500 text-sm mt-1">Explore flowers, foods, and drinks with interactive cards</p>
+            <div class="w-16 h-1 bg-gradient-to-r from-vibrantPink to-babyBlue mx-auto mt-2 rounded-full"></div>
+        </div>
+
+        <!-- Interactive Search Bar for Favorites -->
+        <div class="max-w-md mx-auto mb-8 relative">
+            <i class="fa-solid fa-magnifying-glass absolute left-4 top-3.5 text-slate-400"></i>
+            <input type="text" id="favorites-search" oninput="filterFavorites()" placeholder="Search flowers, food, or drinks..." class="w-full pl-11 pr-4 py-2.5 rounded-full border border-softBlush focus:outline-none focus:ring-2 focus:ring-vibrantPink bg-white text-sm shadow-sm transition">
+        </div>
+
+        <!-- Filter Tabs -->
+        <div class="flex justify-center gap-2 mb-8 flex-wrap">
+            <button onclick="switchTab('flowers')" id="tab-flowers" class="tab-btn px-5 py-2 rounded-full text-sm font-semibold transition-all duration-300 bg-vibrantPink text-white shadow-md">
+                🌸 Flowers & Meanings
+            </button>
+            <button onclick="switchTab('food')" id="tab-food" class="tab-btn px-5 py-2 rounded-full text-sm font-semibold transition-all duration-300 bg-white text-slate-600 border border-softBlush hover:bg-pastelPink/40">
+                🍝 Food & Treats
+            </button>
+            <button onclick="switchTab('drinks')" id="tab-drinks" class="tab-btn px-5 py-2 rounded-full text-sm font-semibold transition-all duration-300 bg-white text-slate-600 border border-babyBlue hover:bg-skyBlue/40">
+                🥤 Favorite Drinks
+            </button>
+        </div>
+
+        <!-- TAB CONTENT: FLOWERS -->
+        <div id="content-flowers" class="tab-content block">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Sunflower -->
+                <div class="favorite-item bg-white rounded-2xl p-5 border border-softBlush/60 shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1 cursor-pointer" onclick="openDetailModal('Sunflower 🌻', 'Happiness & Bright Light', 'https://placehold.co/300x200/FFE5EC/FB6F92?text=Sunflower', 'Sunflower reminds me of happiness. Someone gave me \'Sun\' as a nickname because I shine like the sun.')">
+                    <div class="w-full h-36 bg-pastelPink rounded-xl mb-4 overflow-hidden relative flex items-center justify-center">
+                        <img src="https://placehold.co/300x200/FFE5EC/FB6F92?text=Sunflower+Photo" alt="Sunflower" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='https://placehold.co/300x200/FFE5EC/FB6F92?text=Sunflower';">
+                        <span class="absolute bottom-1 right-1 bg-white/90 text-[10px] px-2 py-0.5 rounded border border-softBlush">📷 Click to enlarge</span>
+                    </div>
+                    <h4 class="font-bold text-slate-800 text-lg">Sunflower 🌻</h4>
+                    <p class="text-xs text-vibrantPink font-medium mt-0.5 mb-2">Meaning: Happiness & "Sun" Nickname</p>
+                    <p class="text-xs text-slate-600 leading-relaxed">
+                        Reminds me of happiness. Someone gave me "Sun" as a nickname because I shine like the sun.
+                    </p>
+                </div>
+
+                <!-- Yellow Roses -->
+                <div class="favorite-item bg-white rounded-2xl p-5 border border-babyBlue/60 shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1 cursor-pointer" onclick="openDetailModal('Yellow Roses 🌹', 'Friendship & Cherished Bonds', 'https://placehold.co/300x200/E0F4FF/4A729A?text=Yellow+Roses', 'Roses remind me of friendship. I was once given yellow roses for our friendship anniversary!')">
+                    <div class="w-full h-36 bg-skyBlue rounded-xl mb-4 overflow-hidden relative flex items-center justify-center">
+                        <img src="https://placehold.co/300x200/E0F4FF/4A729A?text=Yellow+Roses+Photo" alt="Yellow Roses" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='https://placehold.co/300x200/E0F4FF/4A729A?text=Yellow+Roses';">
+                        <span class="absolute bottom-1 right-1 bg-white/90 text-[10px] px-2 py-0.5 rounded border border-babyBlue">📷 Click to enlarge</span>
+                    </div>
+                    <h4 class="font-bold text-slate-800 text-lg">Yellow Roses 🌹</h4>
+                    <p class="text-xs text-deepBlueAccent font-medium mt-0.5 mb-2">Meaning: Friendship Anniversary</p>
+                    <p class="text-xs text-slate-600 leading-relaxed">
+                        Roses remind me of friendship. I was once given yellow roses for our friendship anniversary.
+                    </p>
+                </div>
+
+                <!-- White Tulips -->
+                <div class="favorite-item bg-white rounded-2xl p-5 border border-softBlush/60 shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1 cursor-pointer" onclick="openDetailModal('White Tulips 🌷', 'Forgiveness & Fresh Starts', 'https://placehold.co/300x200/FFE5EC/FB6F92?text=White+Tulips', 'White tulips stand for forgiveness and fresh new beginnings.')">
+                    <div class="w-full h-36 bg-pastelPink rounded-xl mb-4 overflow-hidden relative flex items-center justify-center">
+                        <img src="https://placehold.co/300x200/FFE5EC/FB6F92?text=White+Tulips+Photo" alt="White Tulips" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='https://placehold.co/300x200/FFE5EC/FB6F92?text=White+Tulips';">
+                        <span class="absolute bottom-1 right-1 bg-white/90 text-[10px] px-2 py-0.5 rounded border border-softBlush">📷 Click to enlarge</span>
+                    </div>
+                    <h4 class="font-bold text-slate-800 text-lg">White Tulips 🌷</h4>
+                    <p class="text-xs text-vibrantPink font-medium mt-0.5 mb-2">Meaning: Forgiveness & New Beginnings</p>
+                    <p class="text-xs text-slate-600 leading-relaxed">
+                        White tulips are for forgiveness and new beginnings.
+                    </p>
+                </div>
+
+                <!-- Peonies -->
+                <div class="favorite-item bg-white rounded-2xl p-5 border border-babyBlue/60 shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1 cursor-pointer" onclick="openDetailModal('Peonies 🌺', 'Good Life & Prosperity', 'https://placehold.co/300x200/E0F4FF/4A729A?text=Peonies', 'Peonies symbolize a good, beautiful, and flourishing life.')">
+                    <div class="w-full h-36 bg-skyBlue rounded-xl mb-4 overflow-hidden relative flex items-center justify-center">
+                        <img src="https://placehold.co/300x200/E0F4FF/4A729A?text=Peonies+Photo" alt="Peonies" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='https://placehold.co/300x200/E0F4FF/4A729A?text=Peonies';">
+                        <span class="absolute bottom-1 right-1 bg-white/90 text-[10px] px-2 py-0.5 rounded border border-babyBlue">📷 Click to enlarge</span>
+                    </div>
+                    <h4 class="font-bold text-slate-800 text-lg">Peonies 🌺</h4>
+                    <p class="text-xs text-deepBlueAccent font-medium mt-0.5 mb-2">Meaning: Good Life</p>
+                    <p class="text-xs text-slate-600 leading-relaxed">
+                        Peonies represent a good life and prospering happiness.
+                    </p>
+                </div>
+
+                <!-- Lilies -->
+                <div class="favorite-item bg-white rounded-2xl p-5 border border-softBlush/60 shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1 cursor-pointer" onclick="openDetailModal('Lilies 🪷', 'Pretty Elegance', 'https://placehold.co/300x200/FFE5EC/FB6F92?text=Lilies', 'Lilies because they are just so pretty looking!')">
+                    <div class="w-full h-36 bg-pastelPink rounded-xl mb-4 overflow-hidden relative flex items-center justify-center">
+                        <img src="https://placehold.co/300x200/FFE5EC/FB6F92?text=Lilies+Photo" alt="Lilies" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='https://placehold.co/300x200/FFE5EC/FB6F92?text=Lilies';">
+                        <span class="absolute bottom-1 right-1 bg-white/90 text-[10px] px-2 py-0.5 rounded border border-softBlush">📷 Click to enlarge</span>
+                    </div>
+                    <h4 class="font-bold text-slate-800 text-lg">Lilies 🪷</h4>
+                    <p class="text-xs text-vibrantPink font-medium mt-0.5 mb-2">Meaning: Pretty & Elegant</p>
+                    <p class="text-xs text-slate-600 leading-relaxed">
+                        Lilies because they're pretty looking!
+                    </p>
+                </div>
+
+                <!-- Delphinium -->
+                <div class="favorite-item bg-white rounded-2xl p-5 border border-babyBlue/60 shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1 cursor-pointer" onclick="openDetailModal('Delphinium 💙', 'Cute Blue Blooms', 'https://placehold.co/300x200/E0F4FF/4A729A?text=Delphinium', 'Delphinium because it\'s so cute!')">
+                    <div class="w-full h-36 bg-skyBlue rounded-xl mb-4 overflow-hidden relative flex items-center justify-center">
+                        <img src="https://placehold.co/300x200/E0F4FF/4A729A?text=Delphinium+Photo" alt="Delphinium" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='https://placehold.co/300x200/E0F4FF/4A729A?text=Delphinium';">
+                        <span class="absolute bottom-1 right-1 bg-white/90 text-[10px] px-2 py-0.5 rounded border border-babyBlue">📷 Click to enlarge</span>
+                    </div>
+                    <h4 class="font-bold text-slate-800 text-lg">Delphinium 💙</h4>
+                    <p class="text-xs text-deepBlueAccent font-medium mt-0.5 mb-2">Meaning: Adorable Charm</p>
+                    <p class="text-xs text-slate-600 leading-relaxed">
+                        Delphinium because it's cute!
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB CONTENT: FOOD -->
+        <div id="content-food" class="tab-content hidden">
+            <div class="bg-white rounded-2xl p-6 border border-softBlush shadow-sm">
+                <h3 class="text-lg font-bold text-vibrantPink mb-4"><i class="fa-solid fa-utensils"></i> Favorite Dishes & Snacks</h3>
+                <p class="text-xs text-slate-500 mb-4">No explanation needed. I just love eating those multiple times a day! If the world ends and I only have these foods, I think I can survive lol!</p>
+                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+                    <div onclick="openDetailModal('Eggpie 🥧', 'Sweet Comfort', '', 'I can eat Eggpie multiple times a day!')" class="favorite-item p-3 rounded-xl bg-pastelPink/40 text-center border border-softBlush/40 hover:bg-softBlush transition cursor-pointer">
+                        <div class="text-2xl mb-1">🥧</div>
+                        <div class="font-semibold text-slate-800 text-sm">Eggpie</div>
+                    </div>
+                    <div onclick="openDetailModal('Chicken Poppers 🍗', 'Savory Joy', '', 'One of my top favorite treats!')" class="favorite-item p-3 rounded-xl bg-skyBlue/40 text-center border border-babyBlue/40 hover:bg-babyBlue transition cursor-pointer">
+                        <div class="text-2xl mb-1">🍗</div>
+                        <div class="font-semibold text-slate-800 text-sm">Chicken Poppers</div>
+                    </div>
+                    <div onclick="openDetailModal('Eggplant 🍆', 'Delicious Favorite', '', 'Always enjoyable!')" class="favorite-item p-3 rounded-xl bg-pastelPink/40 text-center border border-softBlush/40 hover:bg-softBlush transition cursor-pointer">
+                        <div class="text-2xl mb-1">🍆</div>
+                        <div class="font-semibold text-slate-800 text-sm">Eggplant</div>
+                    </div>
+                    <div onclick="openDetailModal('Tomatoes 🍅', 'Fresh Delight', '', 'Simple and delicious!')" class="favorite-item p-3 rounded-xl bg-skyBlue/40 text-center border border-babyBlue/40 hover:bg-babyBlue transition cursor-pointer">
+                        <div class="text-2xl mb-1">🍅</div>
+                        <div class="font-semibold text-slate-800 text-sm">Tomatoes</div>
+                    </div>
+                    <div onclick="openDetailModal('Fries 🍟', 'Crispy Classic', '', 'Fries anytime, anywhere!')" class="favorite-item p-3 rounded-xl bg-pastelPink/40 text-center border border-softBlush/40 hover:bg-softBlush transition cursor-pointer">
+                        <div class="text-2xl mb-1">🍟</div>
+                        <div class="font-semibold text-slate-800 text-sm">Fries</div>
+                    </div>
+                    <div onclick="openDetailModal('Carbonara 🍝', 'Creamy Pasta', '', 'Creamy Carbonara is ultimate comfort food!')" class="favorite-item p-3 rounded-xl bg-skyBlue/40 text-center border border-babyBlue/40 hover:bg-babyBlue transition cursor-pointer">
+                        <div class="text-2xl mb-1">🍝</div>
+                        <div class="font-semibold text-slate-800 text-sm">Carbonara</div>
+                    </div>
+                    <div onclick="openDetailModal('Cheese 🧀', 'Savory Staple', '', 'Cheese makes everything better!')" class="favorite-item p-3 rounded-xl bg-pastelPink/40 text-center border border-softBlush/40 hover:bg-softBlush transition cursor-pointer">
+                        <div class="text-2xl mb-1">🧀</div>
+                        <div class="font-semibold text-slate-800 text-sm">Cheese</div>
+                    </div>
+                </div>
+            </div>
+  </div>
+          <!-- TAB CONTENT: DRINKS -->
+        <div id="content-drinks" class="tab-content hidden">
+            <div class="bg-white rounded-2xl p-6 border border-babyBlue shadow-sm">
+                <h3 class="text-lg font-bold text-deepBlueAccent mb-4"><i class="fa-solid fa-glass-water"></i> Refreshing Beverages</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                    <div onclick="openDetailModal('Cold Water 🧊', 'Number One Pick', '', 'I prefer cold water more than warm just because I prefer them!')" class="favorite-item p-4 rounded-xl bg-skyBlue/30 border border-babyBlue flex items-center gap-3 hover:bg-skyBlue/60 transition cursor-pointer">
+                        <span class="text-3xl">🧊</span>
+                        <div>
+                            <div class="font-bold text-slate-800 text-sm">Cold Water</div>
+                            <div class="text-xs text-deepBlueAccent">#1 Preference - Cold over warm!</div>
+                        </div>
+                    </div>
+                    <div onclick="openDetailModal('Coke with Float 🥤', 'Sweet Refreshment', '', 'A delicious ice cream float treat!')" class="favorite-item p-4 rounded-xl bg-pastelPink/30 border border-softBlush flex items-center gap-3 hover:bg-pastelPink/60 transition cursor-pointer">
+                        <span class="text-3xl">🥤</span>
+                        <div>
+                            <div class="font-bold text-slate-800 text-sm">Coke with Float</div>
+                            <div class="text-xs text-vibrantPink">Classic sweet treat</div>
+                        </div>
+                    </div>
+                    <div onclick="openDetailModal('Chocolate Drinks 🍫', 'Sweet Comfort', '', 'Any chocolate drinks make my day!')" class="favorite-item p-4 rounded-xl bg-skyBlue/30 border border-babyBlue flex items-center gap-3 hover:bg-skyBlue/60 transition cursor-pointer">
+                        <span class="text-3xl">🍫</span>
+                        <div>
+                            <div class="font-bold text-slate-800 text-sm">Chocolate Drinks</div>
+                            <div class="text-xs text-deepBlueAccent">Any rich chocolate beverage</div>
+                        </div>
+                    </div>
+                    <div onclick="openDetailModal('Milk 🥛', 'Smooth Comfort', '', 'Fresh and soothing milk!')" class="favorite-item p-4 rounded-xl bg-pastelPink/30 border border-softBlush flex items-center gap-3 hover:bg-pastelPink/60 transition cursor-pointer">
+                        <span class="text-3xl">🥛</span>
+                        <div>
+                            <div class="font-bold text-slate-800 text-sm">Milk</div>
+                            <div class="text-xs text-vibrantPink">Comforting & smooth</div>
+                        </div>
+                    </div>
+                    <div onclick="openDetailModal('Strawberry Flavored Drinks 🍓', 'Fruity Sweetness', '', 'Delightfully sweet strawberry flavors!')" class="favorite-item p-4 rounded-xl bg-skyBlue/30 border border-babyBlue flex items-center gap-3 hover:bg-skyBlue/60 transition cursor-pointer">
+                        <span class="text-3xl">🍓</span>
+                        <div>
+                            <div class="font-bold text-slate-800 text-sm">Strawberry Drinks</div>
+                            <div class="text-xs text-deepBlueAccent">Fruity & sweet strawberry</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hobbies Section -->
+    <section id="hobbies" class="py-16 px-4 bg-pastelPink/30 border-y border-softBlush/30 z-10 relative">
+        <div class="max-w-5xl mx-auto">
+            <div class="text-center mb-12">
+                <h2 class="text-2xl sm:text-3xl font-bold text-slate-800">Hobbies & Passions</h2>
+                <p class="text-slate-500 text-sm mt-1">Things I love doing in my personal space</p>
+                <div class="w-16 h-1 bg-gradient-to-r from-vibrantPink to-babyBlue mx-auto mt-2 rounded-full"></div>
+            </div>
+
+            <!-- General Hobbies Note -->
+            <div class="bg-white/90 backdrop-blur-sm p-5 rounded-2xl border border-softBlush mb-8 text-center max-w-2xl mx-auto shadow-sm">
+                <p class="text-xs sm:text-sm text-slate-600 leading-relaxed italic">
+                    <i class="fa-solid fa-heart text-vibrantPink mr-1"></i>
+                    "I'm not like the other kids that are talented. I'm just doing it out of hobbies and I don't have the capacity and confidence to do it passionately."
+                </p>
+            </div>
+
+            <!-- Grid of General Hobbies -->
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 mb-8">
+                <div class="bg-white p-4 rounded-2xl text-center border border-softBlush shadow-sm hover:scale-105 transition-transform">
+                    <div class="w-12 h-12 bg-pastelPink text-vibrantPink rounded-full flex items-center justify-center mb-2 text-xl mx-auto">💃</div>
+                    <h4 class="font-bold text-slate-800 text-sm">Dancing</h4>
+                    <span class="text-[10px] text-slate-400">Casual Hobby</span>
+                </div>
+                <div class="bg-white p-4 rounded-2xl text-center border border-babyBlue shadow-sm hover:scale-105 transition-transform">
+                    <div class="w-12 h-12 bg-skyBlue text-deepBlueAccent rounded-full flex items-center justify-center mb-2 text-xl mx-auto">🎤</div>
+                    <h4 class="font-bold text-slate-800 text-sm">Singing</h4>
+                    <span class="text-[10px] text-slate-400">Casual Hobby</span>
+                </div>
+                <div class="bg-white p-4 rounded-2xl text-center border border-softBlush shadow-sm hover:scale-105 transition-transform">
+                    <div class="w-12 h-12 bg-pastelPink text-vibrantPink rounded-full flex items-center justify-center mb-2 text-xl mx-auto">📚</div>
+                    <h4 class="font-bold text-slate-800 text-sm">Reading</h4>
+                    <span class="text-[10px] text-slate-400">Quiet Time</span>
+                </div>
+                <div class="bg-white p-4 rounded-2xl text-center border border-babyBlue shadow-sm hover:scale-105 transition-transform">
+                    <div class="w-12 h-12 bg-skyBlue text-deepBlueAccent rounded-full flex items-center justify-center mb-2 text-xl mx-auto">🪡</div>
+                    <h4 class="font-bold text-slate-800 text-sm">Sewing</h4>
+                    <span class="text-[10px] text-slate-400">Clothes</span>
+                </div>
+                <div class="bg-white p-4 rounded-2xl text-center border border-softBlush shadow-sm hover:scale-105 transition-transform">
+                    <div class="w-12 h-12 bg-pastelPink text-vibrantPink rounded-full flex items-center justify-center mb-2 text-xl mx-auto">💅</div>
+                    <h4 class="font-bold text-slate-800 text-sm">Painting Nails</h4>
+                    <span class="text-[10px] text-slate-400">Self Care</span>
+                </div>
+                <div class="bg-white p-4 rounded-2xl text-center border border-babyBlue shadow-sm hover:scale-105 transition-transform">
+                    <div class="w-12 h-12 bg-skyBlue text-deepBlueAccent rounded-full flex items-center justify-center mb-2 text-xl mx-auto">🎬</div>
+                    <h4 class="font-bold text-slate-800 text-sm">Movies</h4>
+                    <span class="text-[10px] text-slate-400">Watching</span>
+                </div>
+            </div>
+
+            <!-- Deep Focus Card: Writing Stories -->
+            <div class="bg-white rounded-3xl p-6 sm:p-8 border-2 border-vibrantPink shadow-md relative overflow-hidden card-gradient-pink">
+                <div class="flex flex-col md:flex-row items-start md:items-center gap-6">
+                    <div class="w-16 h-16 rounded-2xl bg-vibrantPink text-white flex items-center justify-center text-3xl shrink-0 shadow-md">
+                        ✍️
+                    </div>
+                    <div class="space-y-3">
+                        <div class="inline-block px-3 py-1 rounded-full bg-vibrantPink/10 text-vibrantPink text-xs font-bold uppercase tracking-wider">
+                            My Greatest Passion
+                        </div>
+                        <h3 class="text-xl sm:text-2xl font-bold text-slate-800">Why I Really, Really Love Writing Stories</h3>
+                        <blockquote class="text-xs sm:text-base text-slate-700 leading-relaxed italic border-l-4 border-vibrantPink pl-4 py-1">
+                            "But with writing, I really really love writing, why? Because in writing people don't get to see who you really are behind those works, you can be whoever you want. I can express myself more on writing. I put myself in their shoes and realize a lot more things in the world."
+                        </blockquote>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- K-Pop Idols Section -->
+    <section id="fandom" class="py-16 px-4 max-w-5xl mx-auto z-10 relative">
+        <div class="text-center mb-8">
+            <h2 class="text-2xl sm:text-3xl font-bold text-slate-800">My Idols & Music</h2>
+            <p class="text-slate-500 text-sm mt-1">Liking K-Pop idols especially Twice and Seventeen since 2016-2017</p>
+            <div class="w-16 h-1 bg-gradient-to-r from-vibrantPink to-babyBlue mx-auto mt-2 rounded-full"></div>
+        </div>
+
+        <!-- Interactive K-Pop Quote / Song Vibe Generator -->
+        <div class="bg-white rounded-2xl p-6 border border-softBlush shadow-sm mb-10 text-center max-w-xl mx-auto">
+            <div class="text-vibrantPink text-2xl mb-2">✨ Invisible String Connection ✨</div>
+            <p id="kpop-quote-text" class="text-sm text-slate-700 italic min-h-[48px] flex items-center justify-center px-4">
+                "Loving them was the most precious and best thing I've ever did. Even though they don't know who I am, they made me feel special."
+            </p>
+            <button onclick="generateKpopQuote()" class="mt-4 px-5 py-2 rounded-full bg-vibrantPink text-white text-xs font-bold shadow-md hover:bg-bubblegumPink transition active:scale-95">
+                🎲 Generate Idol Affirmation / Lyric Line
+            </button>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-8">
+            <!-- TWICE Card -->
+            <div class="bg-white rounded-3xl p-6 border-2 border-softBlush shadow-md relative overflow-hidden flex flex-col justify-between">
+                <div class="absolute top-0 right-0 bg-vibrantPink text-white text-xs font-bold px-4 py-1 rounded-bl-xl">
+                    Fan Since 2016-2017
+                </div>
+                <div>
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-12 h-12 rounded-full bg-pastelPink flex items-center justify-center text-vibrantPink font-bold text-xl">
+                            🍭
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-extrabold text-slate-800">TWICE</h3>
+                            <span class="text-xs text-vibrantPink font-semibold">JYP Entertainment</span>
+                        </div>
+                    </div>
+                    <div class="w-full h-40 bg-pastelPink/60 rounded-2xl mb-4 overflow-hidden relative flex items-center justify-center">
+                        <img src="https://placehold.co/400x200/FFE5EC/FB6F92?text=TWICE+Photo+Placeholder" alt="TWICE Placeholder" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='https://placehold.co/400x200/FFE5EC/FB6F92?text=TWICE';">
+                        <span class="absolute bottom-1 right-1 bg-white/90 text-[10px] px-2 py-0.5 rounded border border-softBlush">📷 Photo Signal</span>
+                    </div>
+                    <p class="text-xs sm:text-sm text-slate-600 leading-relaxed mb-4">
+                        "They made me laugh and forget about life problems for a while. That's why they're so precious to me."
+                    </p>
+                </div>
+            </div>
+
+            <!-- SEVENTEEN Card -->
+            <div class="bg-white rounded-3xl p-6 border-2 border-babyBlue shadow-md relative overflow-hidden flex flex-col justify-between">
+                <div class="absolute top-0 right-0 bg-deepBlueAccent text-white text-xs font-bold px-4 py-1 rounded-bl-xl">
+                    Fan Since 2016-2017
+                </div>
+                <div>
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-12 h-12 rounded-full bg-skyBlue flex items-center justify-center text-deepBlueAccent font-bold text-xl">
+                            💎
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-extrabold text-slate-800">SEVENTEEN</h3>
+                            <span class="text-xs text-deepBlueAccent font-semibold">PLEDIS Entertainment</span>
+                        </div>
+                    </div>
+                    <div class="w-full h-40 bg-skyBlue/60 rounded-2xl mb-4 overflow-hidden relative flex items-center justify-center">
+                        <img src="https://placehold.co/400x200/E0F4FF/4A729A?text=SEVENTEEN+Photo+Placeholder" alt="SEVENTEEN Placeholder" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='https://placehold.co/400x200/E0F4FF/4A729A?text=SEVENTEEN';">
+                        <span class="absolute bottom-1 right-1 bg-white/90 text-[10px] px-2 py-0.5 rounded border border-babyBlue">📷 Photo Signal</span>
+                    </div>
+                    <p class="text-xs sm:text-sm text-slate-600 leading-relaxed mb-4">
+                        "I feel like there's an invisible string that connects us both. They made me feel special."
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Heart Counter Button Section -->
+    <section class="py-12 bg-gradient-to-r from-pastelPink via-white to-skyBlue text-center border-t border-softBlush/40 z-10 relative">
+        <div class="max-w-md mx-auto px-4">
+            <h3 class="text-xl font-bold text-slate-800 mb-2">Send Princess Charlotte Some Love! 💖</h3>
+            <p class="text-xs text-slate-500 mb-6">Click the heart below to send floating appreciation hearts!</p>
+            
+            <button onclick="sendHeart(event)" class="relative inline-flex items-center gap-3 px-8 py-4 rounded-full bg-vibrantPink text-white font-extrabold text-lg shadow-lg hover:bg-bubblegumPink active:scale-90 transition-all duration-300">
+                <i class="fa-solid fa-heart text-2xl animate-pulse"></i>
+                <span>Send Heart</span>
+                <span id="heart-count-badge" class="ml-2 bg-white text-vibrantPink px-3 py-1 rounded-full text-xs shadow-inner">0</span>
+            </button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-softBlush py-8 text-center text-xs text-slate-500 z-10 relative">
+        <div class="max-w-5xl mx-auto px-4 space-y-3">
+            <p class="font-cursive-override text-2xl text-vibrantPink font-bold">Princess Charlotte C. Grutas</p>
+            <p class="text-slate-600">2nd Year BS Computer Science • Calamba City, Laguna</p>
+            <p class="text-[11px] text-slate-400">
+                Designed with soft pinks & light blues 💕 | SF UI Text Typography Edition
+            </p>
+        </div>
+    </footer>
+
+    <!-- Interactive Detail Modal / Popup -->
+    <div id="detail-modal" class="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-sm hidden flex items-center justify-center p-4 transition-opacity duration-300">
+        <div class="bg-white rounded-3xl max-w-lg w-full p-6 border-2 border-softBlush shadow-2xl relative animate-in fade-in zoom-in duration-200">
+            <button onclick="closeModal()" class="absolute top-4 right-4 text-slate-400 hover:text-vibrantPink w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-sm font-bold">
+                ✕
+            </button>
+            <div id="modal-img-container" class="w-full h-48 bg-pastelPink rounded-2xl mb-4 overflow-hidden hidden">
+                <img id="modal-img" src="" alt="Modal Image" class="w-full h-full object-cover">
+            </div>
+            <div id="modal-tag" class="inline-block px-3 py-1 rounded-full bg-pastelPink text-vibrantPink text-[11px] font-bold mb-2">
+                Detail View
+            </div>
+            <h3 id="modal-title" class="text-2xl font-extrabold text-slate-800 mb-2">Title</h3>
+            <p id="modal-desc" class="text-sm text-slate-600 leading-relaxed mb-6">Description content</p>
+            <div class="flex justify-end">
+                <button onclick="closeModal()" class="px-5 py-2 rounded-full bg-vibrantPink text-white font-bold text-xs hover:bg-bubblegumPink transition">
+                    Close
+                </button>
+            </div>
+        </div>
+                      </div>
+    <script>
+        // Global State Variables
+        let heartCount = 0;
+        let isAudioPlaying = false;
+
+        // Interactive Heart Trail Effect on Mouse / Touch Move
+        document.addEventListener('mousemove', function(e) {
+            if (Math.random() > 0.85) { // Control particle frequency
+                createCursorHeart(e.clientX, e.clientY);
+            }
+        });
+
+        function createCursorHeart(x, y) {
+            const particle = document.createElement('div');
+            particle.className = 'cursor-particle';
+            const hearts = ['🌸', '✨', '💖', '💙'];
+            particle.innerText = hearts[Math.floor(Math.random() * hearts.length)];
+            particle.style.left = x + 'px';
+            particle.style.top = y + 'px';
+            document.body.appendChild(particle);
+
+            setTimeout(() => particle.remove(), 1000);
+        }
+
+        // Heart Counter & Confetti Particles
+        function sendHeart(e) {
+            heartCount++;
+            document.getElementById('heart-count-badge').innerText = heartCount;
+            document.getElementById('nav-heart-count').innerText = heartCount;
+
+            // Trigger Particle Burst
+            const button = e.currentTarget;
+            const rect = button.getBoundingClientRect();
+
+            for (let i = 0; i < 12; i++) {
+                const burst = document.createElement('div');
+                burst.className = 'heart-burst';
+                burst.innerText = ['💖', '✨', '🌸', '💙'][Math.floor(Math.random() * 4)];
+                
+                const angle = Math.random() * Math.PI * 2;
+                const distance = Math.random() * 80 + 20;
+                const x = Math.cos(angle) * distance;
+                const y = Math.sin(angle) * distance;
+
+                burst.style.left = (rect.width / 2) + 'px';
+                burst.style.top = (rect.height / 2) + 'px';
+                burst.style.setProperty('--tw-x', `${x}px`);
+                burst.style.setProperty('--tw-y', `${y}px`);
+
+                button.appendChild(burst);
+                setTimeout(() => burst.remove(), 800);
+            }
+        }
+
+        function triggerConfettiBurst(e) {
+            sendHeart(e);
+        }
+
+        // Tab Switcher Logic
+        function switchTab(tabName) {
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.add('hidden'));
+
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(btn => {
+                btn.className = 'tab-btn px-5 py-2 rounded-full text-sm font-semibold transition-all duration-300 bg-white text-slate-600 border border-softBlush hover:bg-pastelPink/40';
+            });
+
+            const selectedContent = document.getElementById(`content-${tabName}`);
+            if (selectedContent) {
+                selectedContent.classList.remove('hidden');
+            }
+
+            const activeBtn = document.getElementById(`tab-${tabName}`);
+            if (activeBtn) {
+                activeBtn.className = 'tab-btn px-5 py-2 rounded-full text-sm font-semibold transition-all duration-300 bg-vibrantPink text-white shadow-md';
+            }
+        }
+
+        // Search Filter Logic for Favorites
+        function filterFavorites() {
+            const query = document.getElementById('favorites-search').value.toLowerCase();
+            const items = document.querySelectorAll('.favorite-item');
+
+            items.forEach(item => {
+                const text = item.innerText.toLowerCase();
+                if (text.includes(query)) {
+                    item.classList.remove('hidden');
+                } else {
+                    item.classList.add('hidden');
+                }
+            });
+        }
+
+        // Modal / Popup Logic
+        function openDetailModal(title, tag, imgUrl, description) {
+            document.getElementById('modal-title').innerText = title;
+            document.getElementById('modal-tag').innerText = tag;
+            document.getElementById('modal-desc').innerText = description;
+
+            const imgContainer = document.getElementById('modal-img-container');
+            const imgEl = document.getElementById('modal-img');
+
+            if (imgUrl && imgUrl.trim() !== '') {
+                imgEl.src = imgUrl;
+                imgContainer.classList.remove('hidden');
+            } else {
+                imgContainer.classList.add('hidden');
+            }
+
+            document.getElementById('detail-modal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('detail-modal').classList.add('hidden');
+        }
+
+        // K-Pop Quote Generator
+        const kpopQuotes = [
+            "\"Loving them was the most precious and best thing I've ever did. Even though they don't know who I am, they made me feel special.\" - Princess Charlotte",
+            "\"I feel like there's an invisible string that connects us both.\" 💖",
+            "\"They made me laugh and forget about life problems for a while, that's why they're so precious to me.\"",
+            "\"You make me feel special, no matter how the world brings me down!\" — TWICE Vibe ✨",
+            "\"Together, our story shines brighter than any diamond.\" — SEVENTEEN Vibe 💎",
+            "\"In a quiet room with music, every feeling becomes a beautiful story.\""
+        ];
+
+        function generateKpopQuote() {
+            const randomIndex = Math.floor(Math.random() * kpopQuotes.length);
+            document.getElementById('kpop-quote-text').innerText = kpopQuotes[randomIndex];
+        }
+
+        // Audio Toggle Player Logic
+        function toggleAudio() {
+            const audio = document.getElementById('bg-audio');
+            const icon = document.getElementById('audio-icon');
+            const status = document.getElementById('audio-status');
+            const visualizer = document.getElementById('visualizer-bars');
+
+            if (!isAudioPlaying) {
+                audio.play().then(() => {
+                    isAudioPlaying = true;
+                    icon.className = 'fa-solid fa-pause';
+                    status.innerText = 'Now Playing • Soft Aesthetic Melody';
+                    visualizer.classList.remove('hidden');
+                }).catch(() => {
+                    status.innerText = 'Click again to permit audio';
+                });
+            } else {
+                audio.pause();
+                isAudioPlaying = false;
+                icon.className = 'fa-solid fa-play';
+                status.innerText = 'Paused • Click to resume vibe';
+                visualizer.classList.add('hidden');
+            }
+        }
+        // Image Preview simulator for local files
+        function previewImage(event, targetImgId) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById(targetImgId).src = e.target.result;
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // Mobile Menu Toggle
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        if (menuBtn && mobileMenu) {
+            menuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+        }
+
+        // Floating Background Elements Generator
+        function createFloatingShapes() {
+            const container = document.getElementById('floating-container');
+            if (!container) return;
+
+            const icons = ['✨', '💖', '🌸', '💙', '☁️', '❄️'];
+            for (let i = 0; i < 15; i++) {
+                const el = document.createElement('div');
+                el.className = 'floating-element';
+                el.innerText = icons[Math.floor(Math.random() * icons.length)];
+
+                el.style.left = `${Math.random() * 100}%`;
+                el.style.top = `${Math.random() * 100}%`;
+                el.style.fontSize = `${Math.random() * 18 + 12}px`;
+                el.style.animationDuration = `${Math.random() * 10 + 10}s`;
+                el.style.animationDelay = `${Math.random() * 5}s`;
+
+                container.appendChild(el);
+            }
+        }
+
+        window.onload = function() {
+            createFloatingShapes();
+        };
+    </script>
+</body>
+</html>                      
